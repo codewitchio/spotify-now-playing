@@ -1,0 +1,29 @@
+{
+  "name": "spotify-now-playing",
+  "version": "1.0.0",
+  "description": "A browser source showing your currently playing Spotify track for use in streaming through software like OBS.",
+  "main": "src/app.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "querystring": "^0.2.0",
+    "request": "^2.88.2",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aryuko/spotify-now-playing.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aryuko/spotify-now-playing/issues"
+  },
+  "homepage": "https://github.com/Aryuko/spotify-now-playing#readme"
+}
