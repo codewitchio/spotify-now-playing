@@ -1,61 +1,60 @@
 <!doctype html>
 <html>
-  <head>
-    <title>spotify-now-playing</title>
-    <style>
-      @font-face {
-        font-family: 'lineto-circular-pro-medium';
-        src: urL('/fonts/lineto-circular-pro-medium.ttf') format('truetype')
-      }
-      @font-face {
-        font-family: 'lineto-circular-pro-book';
-        src: urL('/fonts/lineto-circular-pro-book.ttf') format('truetype')
-      }
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { background-color: #525252;}
-      #output { display: flex; background-color: #282828; width: 428px; color: white; font-family: Circular Spotify Tx T Black; border-radius: 0 12px 12px 0; overflow: hidden; }
-      #album-art { height: 128px; width: 128px; }
-      #text-area { width: 300px; display: flex; flex-direction: column; justify-content: center; }
-      #text-area > div { margin-left: 10px; }
-      #track-name { font-size: 18px; font-family: lineto-circular-pro-medium; }
-      #artist-name { font-size: 16px; font-family: lineto-circular-pro-book; }
-
-      #title-area { width: 428px; height: 30px; display: flex; align-items: center; justify-content: center; color:white }
-      #album-icon { width: 30px; }
-      #title { font-size: 18px; font-family: lineto-circular-pro-medium; margin-left: 5px;}
-      .rotating { animation: rotation 2s infinite linear; }
-
-      #login-area { width: 428px; height: 158px; display: flex; align-items: center; justify-content: center; display: none; }
-      #login-button { background-color: #1DB954; color: white; padding: 18px 48px 16px; border-radius: 500px; font-family: lineto-circular-pro-medium; font-size: 14px; text-decoration: none; }
-
-      @keyframes rotation {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(359deg);
-        }
-      }
-  </style>
-  <link href="//db.onlinewebfonts.com/c/01173b246d9d9ea808ea75a26b3b61bb?family=Circular+Spotify+Tx+T+Black" rel="stylesheet" type="text/css"/>
-	<script src="/socket.io/socket.io.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-	<script src="/script/spotify.js"></script>
-  </head>
-  <body>
-    <div id="login-area">
-      <a id="login-button" href="/login" >LOG IN</a>
-    </div>
-    <div id="title-area">
-      <img id="album-icon" src="/images/album.svg"/>
-      <span id="title">Loading</span>
-    </div>
-    <div id="output">
-      <img id="album-art" />
-      <div id="text-area">
-        <div id="track-name"></div>
-        <div id="artist-name"></div>
-      </div>
-    </div>
-  </body>
+    <head>
+        <title>spotify-now-playing</title>
+        <style>
+            @font-face {
+                font-family: 'lineto-circular-pro-medium';
+                src: urL('/fonts/lineto-circular-pro-medium.ttf') format('truetype')
+            }
+            @font-face {
+                font-family: 'lineto-circular-pro-book';
+                src: urL('/fonts/lineto-circular-pro-book.ttf') format('truetype')
+            }
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { background-color: #525252;}
+            #output { display: flex; background-color: #282828; width: 428px; color: white; font-family: Circular Spotify Tx T Black; border-radius: 0 12px 12px 0; overflow: hidden; }
+            #album-art { height: 128px; width: 128px; }
+            #text-area { width: 300px; display: flex; flex-direction: column; justify-content: center; }
+            #text-area > div { margin-left: 10px; }
+            #track-name { font-size: 18px; font-family: lineto-circular-pro-medium; }
+            #artist-name { font-size: 16px; font-family: lineto-circular-pro-book; }
+            
+            #title-area { width: 428px; height: 30px; display: flex; align-items: center; justify-content: center; color:white }
+            #album-icon { width: 30px; }
+            #title { font-size: 18px; font-family: lineto-circular-pro-medium; margin-left: 5px;}
+            .rotating { animation: rotation 2s infinite linear; }
+            
+            #login-area { width: 428px; height: 158px; display: flex; align-items: center; justify-content: center; display: none; }
+            #login-button { background-color: #1DB954; color: white; padding: 18px 48px 16px; border-radius: 500px; font-family: lineto-circular-pro-medium; font-size: 14px; text-decoration: none; }
+            
+            @keyframes rotation {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(359deg);
+                }
+            }
+        </style>
+        <link href="//db.onlinewebfonts.com/c/01173b246d9d9ea808ea75a26b3b61bb?family=Circular+Spotify+Tx+T+Black" rel="stylesheet" type="text/css"/>
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="/script/spotify.js"></script>
+    </head>
+    <body>
+        <div id="login-area">
+            <a id="login-button" href="/login" >LOG IN</a>
+        </div>
+        <div id="title-area">
+            <img id="album-icon" src="/images/album.svg"/>
+            <span id="title">Loading</span>
+        </div>
+        <div id="output">
+            <img id="album-art" />
+            <div id="text-area">
+                <div id="track-name"></div>
+                <div id="artist-name"></div>
+            </div>
+        </div>
+    </body>
 </html>

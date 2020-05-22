@@ -7,7 +7,7 @@ $(function () {
     let access_token = params.access_token
     let refresh_token = params.refresh_token
     let error = params.error
-
+    
     let interval
     
     if (error) {
@@ -60,7 +60,7 @@ $(function () {
             }
         }).done(function(data) {
             access_token = data.access_token
-
+            
             getNowPlaying(access_token)
         })
     }
@@ -78,7 +78,7 @@ $(function () {
         }
         return hashParams
     }
-
+    
     // Can't get CORS to work with this
     function fetchNowPlaying(access_token) {
         url = 'https://api.spotify.com/v1/me/player/currently-playing'

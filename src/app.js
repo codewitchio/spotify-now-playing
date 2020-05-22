@@ -8,23 +8,17 @@
 const express       = require('express')
 const app           = express()
 const http          = require('http').createServer(app);
-const io            = require('socket.io')(http);
 const cookieParser  = require('cookie-parser');
 const cors          = require('cors');
 
-const config = require('./config.js')
-const authentication = require('./authentication.js')
-
-io.on('connection', (socket) => {
-    console.log('Client connected:', socket.handshake.headers['user-agent'])
-    socket.on('disconnect', () => { console.log('Client disconnected') })
-
-    io.emit('test')
-})
+const config        = require('./config.js')
+const auth          = require('./authentication.js')
 
 app.use(express.static(__dirname + '/public')).use(cookieParser()).use(cors())
+
 app.get('/', (req, res) => res.sendFile(__dirname + '/public/html/index.html'))
-app.get('/login', (req, res) => authentication.login(req, res))
-app.get('/callback', (req, res) => authentication.callback(req, res))
-app.get('/refresh_token', (req, res) => authentication.refresh_token(req, res))
+app.get('/login', (req, res) => auth.login(req, res))
+app.get('/callback', (req, res) => auth.callback(req, res))
+app.get('/refresh_token', (req, res) => auth.refresh_token(req, res))
+
 http.listen(config.server.port, () => console.log('listening on', config.server.port))
