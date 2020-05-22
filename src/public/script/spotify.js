@@ -25,12 +25,21 @@ $(function () {
             console.log('access token is set')
             
             $.ajax({
-                url: 'https://api.spotify.com/v1/me',
+                url: 'https://api.spotify.com/v1/me/player/currently-playing',
                 headers: {
                   'Authorization': 'Bearer ' + access_token
                 },
                 success: function(response) {
                   console.log(response)
+
+                  imgUrl = response.item.album.images[1].url
+                  trackName = response.item.name
+                  artistName = response.item.artists[0].name
+
+                  console.log(imgUrl)
+                  $('#album-art').attr('src', imgUrl)
+                  $('#track-name').text(trackName)
+                  $('#artist-name').text(artistName)
                 }
             });
         }
