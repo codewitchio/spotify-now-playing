@@ -2,7 +2,7 @@ config = {
     interval: 3000
 }
 
-$(function () {    
+$(function () {
     let params = getHashParams()
     let access_token = params.access_token
     let refresh_token = params.refresh_token
@@ -12,6 +12,10 @@ $(function () {
     
     if (error) {
         alert('Authentication failed')
+    } else if (!refresh_token) {
+        $('#title-area').hide()
+        $('#output').hide()
+        $('#login-area').show()
     } else {
         if (access_token || refresh_token) {
             getNowPlaying()
