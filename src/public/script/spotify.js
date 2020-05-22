@@ -1,5 +1,6 @@
 config = {
-    interval: 3000
+    interval: 3000,
+    totalWidth: 428
 }
 
 $(function () {
@@ -31,7 +32,7 @@ $(function () {
             error: (jqXHR) => { if(jqXHR.status == 401) { refreshToken() } }
         })
     }
-    
+    let previousProgress = 9999999999
     function updateUI(response) {
         console.log(response)
         
@@ -50,6 +51,24 @@ $(function () {
         $('#album-art').attr('src', imgUrl)
         $('#track-name').text(trackName)
         $('#artist-name').text(artistName)
+
+        let duration = response.item.duration_ms
+        let progress = response.progress_ms
+        let progressTarget = Math.min(progress + config.interval, duration)
+
+        let part = progressTarget/duration
+        let partTarget = progressTarget/duration
+
+        let actualWidth = Math.floor(part * config.totalWidth)
+        let widthTarget = Math.floor(partTarget * config.totalWidth)
+
+        // Snap instantly into place if distance is greater than natural, indicating a skip, then continue as usual
+        let distance = Math.abs(progress - previousProgress)
+        if(distance > 3500) { $('#progress-bar').width(actualWidth) } 
+
+        $('#progress-bar').animate({width: widthTarget}, (config.interval - 100))
+       
+        previousProgress = progress
     }
     
     function refreshToken() {

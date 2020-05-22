@@ -1,3 +1,5 @@
+<!-- Total width x height = 428 x 168-->
+
 <!doctype html>
 <html>
     <head>
@@ -13,7 +15,8 @@
             }
             * { margin: 0; padding: 0; box-sizing: border-box; }
             body { background-color: #525252;}
-            #output { display: flex; background-color: #282828; width: 428px; color: white; font-family: Circular Spotify Tx T Black; border-radius: 0 12px 12px 0; overflow: hidden; }
+
+            #output { display: flex; background-color: #282828; width: 428px; color: white; font-family: Circular Spotify Tx T Black; border-radius: 0 0 12px 0; overflow: hidden; }
             #album-art { height: 128px; width: 128px; }
             #text-area { width: 300px; display: flex; flex-direction: column; justify-content: center; }
             #text-area > div { margin-left: 10px; }
@@ -25,6 +28,8 @@
             #title { font-size: 18px; font-family: lineto-circular-pro-medium; margin-left: 5px;}
             .rotating { animation: rotation 2s infinite linear; }
             
+            #progress-bar { width: 0px; height: 5px; margin-top: 5px; background-color: #1DB954; }
+
             #login-area { width: 428px; height: 158px; display: flex; align-items: center; justify-content: center; display: none; }
             #login-button { background-color: #1DB954; color: white; padding: 18px 48px 16px; border-radius: 500px; font-family: lineto-circular-pro-medium; font-size: 14px; text-decoration: none; }
             
@@ -42,18 +47,21 @@
         <script src="/script/spotify.js"></script>
     </head>
     <body>
-        <div id="login-area">
-            <a id="login-button" href="/login" >LOG IN</a>
-        </div>
-        <div id="title-area">
-            <img id="album-icon" src="/images/album.svg"/>
-            <span id="title">Loading</span>
-        </div>
-        <div id="output">
-            <img id="album-art" />
-            <div id="text-area">
-                <div id="track-name"></div>
-                <div id="artist-name"></div>
+        <div class="container">
+            <div id="login-area">
+                <a id="login-button" href="/login" >LOG IN</a>
+            </div>
+            <div id="title-area">
+                <img id="album-icon" src="/images/album.svg"/>
+                <span id="title">Loading</span>
+            </div>
+            <div id="progress-bar"></div>
+            <div id="output">
+                <img id="album-art" />
+                <div id="text-area">
+                    <div id="track-name"></div>
+                    <div id="artist-name"></div>
+                </div>
             </div>
         </div>
     </body>
