@@ -28,48 +28,67 @@ $(function () {
         $.ajax({
             url: 'https://api.spotify.com/v1/me/player/currently-playing',
             headers: { 'Authorization': 'Bearer ' + access_token },
-            success: (response) => updateUI(response),
+            success: (response, status, jqXHR) => updateUI(response, jqXHR),
             error: (jqXHR) => { if(jqXHR.status == 401) { refreshToken() } }
         })
     }
     
     let previousProgress = 9999999999
-    function updateUI(response) {
-        console.log(response)
+    function updateUI(response, jqXHR) {
+        console.log(response, jqXHR)
+        if (jqXHR.status == 200 && response) {
+            let isPlaying = response.is_playing
+            $('#title').text(isPlaying ? 'Now playing' : 'Paused')
+            if (isPlaying) {
+                $('#album-icon').addClass('rotating')
+            } else {
+                $('#album-icon').removeClass('rotating')
+            }
+            
+            let imgUrl = response.item.album.images[1].url
+            let trackName = response.item.name
+            let artistName = response.item.artists[0].name
+            
+            $('#album-art').attr('src', imgUrl)
+            $('#track-name').text(trackName)
+            $('#artist-name').text(artistName)
+    
+            let duration = response.item.duration_ms
+            let progress = response.progress_ms
+            let progressTarget = Math.min(progress + config.interval, duration)
+    
+            let part = progressTarget/duration
+            let partTarget = progressTarget/duration
+    
+            let actualWidth = Math.floor(part * config.totalWidth)
+            let widthTarget = Math.floor(partTarget * config.totalWidth)
+    
+            // Snap instantly into place if distance is greater than natural, indicating a skip, then continue as usual
+            let distance = Math.abs(progress - previousProgress)
+            if(distance > 3500) { $('#progress-bar').width(actualWidth) } 
+    
+            $('#progress-bar').animate({width: widthTarget}, (config.interval - 100))
+           
+            previousProgress = progress
+        } else if (jqXHR.status == 200 && !response) { // No available devices found
+            resetUI()
+            $('#title').text('No available devices found')
+        } else if (jqXHR.status == 204) { // No song playing or user in private session
+            resetUI()
+            $('#title').text('No song playing')
+        } 
         
-        let isPlaying = response.is_playing
-        $('#title').text(isPlaying ? 'Now playing' : 'Paused')
-        if (isPlaying) {
-            $('#album-icon').addClass('rotating')
-        } else {
-            $('#album-icon').removeClass('rotating')
+    }
+
+    function resetUI() {
+        $('#album-icon').removeClass('rotating')
+        $('#title').text('Loading')
+        $('#track-name').text('')
+        $('#artist-name').text('')
+        $('#progress-bar').width(0)
+        if($('#album-art').attr('src') != 'images/confuseddoggo.gif') {
+            $('#album-art').attr('src', 'images/confuseddoggo.gif')
         }
-        
-        let imgUrl = response.item.album.images[1].url
-        let trackName = response.item.name
-        let artistName = response.item.artists[0].name
-        
-        $('#album-art').attr('src', imgUrl)
-        $('#track-name').text(trackName)
-        $('#artist-name').text(artistName)
-
-        let duration = response.item.duration_ms
-        let progress = response.progress_ms
-        let progressTarget = Math.min(progress + config.interval, duration)
-
-        let part = progressTarget/duration
-        let partTarget = progressTarget/duration
-
-        let actualWidth = Math.floor(part * config.totalWidth)
-        let widthTarget = Math.floor(partTarget * config.totalWidth)
-
-        // Snap instantly into place if distance is greater than natural, indicating a skip, then continue as usual
-        let distance = Math.abs(progress - previousProgress)
-        if(distance > 3500) { $('#progress-bar').width(actualWidth) } 
-
-        $('#progress-bar').animate({width: widthTarget}, (config.interval - 100))
-       
-        previousProgress = progress
     }
     
     function refreshToken() {
