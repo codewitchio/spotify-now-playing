@@ -1,6 +1,10 @@
 # Config
 config.js
 
+# Local certs
+server.cert
+server.key
+
 # Logs
 logs
 *.log

@@ -1,6 +1,8 @@
 module.exports = {
     server: {
-        port: 8888
+        port: 8888,
+        privateKeyPath: 'server.key',
+        certificatePath: 'server.cert'
     },
     spotify: {
         client_id: 'client_id',
