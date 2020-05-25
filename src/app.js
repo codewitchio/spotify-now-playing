@@ -20,6 +20,7 @@ const publicPath = path.join(__dirname, '/public')
 app.use(express.static(publicPath)).use(cookieParser()).use(cors())
 
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, '/public/html/index.html')))
+app.get('/player', (req, res) => res.sendFile(path.join(__dirname, '/public/html/player.html')))
 app.get('/login', (req, res) => auth.login(req, res))
 app.get('/callback', (req, res) => auth.callback(req, res))
 app.get('/refresh_token', (req, res) => auth.refresh_token(req, res))

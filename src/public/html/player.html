@@ -1,0 +1,34 @@
+<!-- Total width x height = 428 x 168-->
+
+<!doctype html>
+<html>
+    <head>
+        <title>spotify-now-playing</title>
+        <link rel="stylesheet" type="text/css" href="html/style.css" />
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="/script/spotify.js"></script>
+    </head>
+    <body>
+        <div id="title-area">
+            <img id="album-icon" src="/images/album.svg"/>
+            <span id="title">Loading</span>
+        </div>
+        <div id="progress-bar"></div>
+        <div id="output">
+            <img id="album-art" />
+            <div id="text-area">
+                <div id="track-name"></div>
+                <div id="artist-name"></div>
+            </div>
+        </div>
+        <div id="instructions">
+            <div id="instructions-text">
+                To use in OBS, create a new browser source, 
+                copy the URL from the address field in your browser (including the token strings) 
+                and paste it into the URL field for the browser source. Then, set width to 428, and 
+                height to 168. Leave everything else default. Example:
+            </div>
+            <img id="instructions-example" src="images/example.png"/>
+        </div>
+    </body>
+</html>

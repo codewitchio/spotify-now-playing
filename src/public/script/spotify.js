@@ -8,19 +8,21 @@ $(function () {
     let access_token = params.access_token
     let refresh_token = params.refresh_token
     let error = params.error
+    let no_instructions = params.no_instructions
     
     let interval
     
     if (error) {
         alert('Authentication failed')
     } else if (!refresh_token) {
-        $('#title-area').hide()
-        $('#output').hide()
-        $('#login-area').css('display', 'flex')
+        window.location.replace('/')
     } else {
         if (access_token || refresh_token) {
             getNowPlaying()
             interval = setInterval(getNowPlaying, config.interval);
+            if(no_instructions) {
+                $('#instructions').hide()
+            }
         }
     }
     
