@@ -16,7 +16,7 @@ $(function () {
     } else if (!refresh_token) {
         $('#title-area').hide()
         $('#output').hide()
-        $('#login-area').show()
+        $('#login-area').css('display', 'flex')
     } else {
         if (access_token || refresh_token) {
             getNowPlaying()
@@ -32,6 +32,7 @@ $(function () {
             error: (jqXHR) => { if(jqXHR.status == 401) { refreshToken() } }
         })
     }
+    
     let previousProgress = 9999999999
     function updateUI(response) {
         console.log(response)
