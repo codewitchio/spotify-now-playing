@@ -104,8 +104,13 @@ a {
 #instructions-text {
     margin-bottom: 20px;
 }
+
 #explanation-text {
     margin: 20px 0;
+}
+
+#explanation-video {
+    border-radius: 10px;
 }
 
 .container {
