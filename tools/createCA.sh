@@ -25,7 +25,7 @@ createRootCACert(){
 		-sha"$sha_bits" -days "$expire" -out "$rootca_cert" 
 }
 
-# Create a certificate for development
+# Create a key for the client.
 createClientKey(){
 	openssl genrsa -out "$client_key" 
 }
@@ -48,16 +48,19 @@ acceptCSR(){
 		-days "$expire" -sha"$sha_bits"
 }
 
-# Log certificate out to stdout
+# Log certificate to stdout
 verifyCert(){
 	openssl x509 -in "$client_cert" -text -noout
 }
 
 # Install into certs folder
 installRootCA(){
+	printf "installing certs\n"
 	mkdir -p ../src/certs/
-	cp "$client_key" ../src/certs/
-	cp "$client_cert" ../src/certs/
+	mv "$client_key" ../src/certs/
+	mv "$client_cert" ../src/certs/
+	# Give r-w execution to group's u:o so we can use it for dev! 
+	chmod 755 -R ../src/certs/
 }
 
 # Print help for CLI
@@ -99,7 +102,7 @@ elif [ "$build" == "yes" ]; then
 	createClientCSR
 	acceptCSR
 	verifyCert
-	printf "installing certs\n"
+	installRootCA
 elif [ "$clean" == "yes" ]; then
 	printf "cleaning...\n"
 	cleanup
