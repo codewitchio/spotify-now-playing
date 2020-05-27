@@ -26,7 +26,7 @@ $(function () {
         if (access_token || refresh_token) {
             getNowPlaying()
             state.interval = setInterval(getNowPlaying, config.interval);
-            
+
             if(no_instructions) {
                 $('#instructions').hide()
             }
@@ -105,6 +105,7 @@ $(function () {
             if(config.debug) { console.log('inactivating UI') }
             
             $('#title').text(`Hiding player because ${reason}`)
+            $('#album-icon').removeClass('rotating')
             
             $('#title-area').removeClass('fadeIn')
             $('#player').removeClass('fadeIn')
