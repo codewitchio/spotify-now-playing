@@ -1,6 +1,8 @@
+// Temporary solution
 config = {
     interval: 3000,
-    totalWidth: 428
+    totalWidth: 428,
+    debug: false
 }
 
 $(function () {
@@ -10,7 +12,11 @@ $(function () {
     let error = params.error
     let no_instructions = params.no_instructions
     
-    let interval
+    state = {
+        interval: undefined,
+        previousProgress: 9999999999,
+        inactive: false,
+    }
     
     if (error) {
         alert('Authentication failed')
@@ -19,7 +25,8 @@ $(function () {
     } else {
         if (access_token || refresh_token) {
             getNowPlaying()
-            interval = setInterval(getNowPlaying, config.interval);
+            state.interval = setInterval(getNowPlaying, config.interval);
+
             if(no_instructions) {
                 $('#instructions').hide()
             }
@@ -35,10 +42,11 @@ $(function () {
         })
     }
     
-    let previousProgress = 9999999999
     function updateUI(response, jqXHR) {
-        console.log(response, jqXHR)
+        if(config.debug) { console.log(response, jqXHR) }
         if (jqXHR.status == 200 && response) {
+            activateUI()
+
             let isPlaying = response.is_playing
             $('#title').text(isPlaying ? 'Now playing' : 'Paused')
             if (isPlaying) {
@@ -66,30 +74,60 @@ $(function () {
             let widthTarget = Math.floor(partTarget * config.totalWidth)
     
             // Snap instantly into place if distance is greater than natural, indicating a skip, then continue as usual
-            let distance = Math.abs(progress - previousProgress)
+            let distance = Math.abs(progress - state.previousProgress)
             if(distance > 3500) { $('#progress-bar').width(actualWidth) } 
     
             $('#progress-bar').animate({width: widthTarget}, (config.interval - 100))
            
-            previousProgress = progress
+            state.previousProgress = progress
         } else if (jqXHR.status == 200 && !response) { // No available devices found
-            resetUI()
-            $('#title').text('No available devices found')
+            inactivateUI('no available devices were found')
         } else if (jqXHR.status == 204) { // No song playing or user in private session
-            resetUI()
-            $('#title').text('No song playing')
+            inactivateUI('of inactivity')
         } 
         
     }
 
-    function resetUI() {
+    // Not currently used
+    function resetUI(title) {
         $('#album-icon').removeClass('rotating')
-        $('#title').text('Loading')
+        $('#title').text( title ? title : 'Loading')
         $('#track-name').text('')
         $('#artist-name').text('')
         $('#progress-bar').width(0)
         if($('#album-art').attr('src') != 'images/confuseddoggo.gif') {
             $('#album-art').attr('src', 'images/confuseddoggo.gif')
+        }
+    }
+
+    function inactivateUI(reason) {
+        if(!state.inactive) {
+            if(config.debug) { console.log('inactivating UI') }
+            
+            $('#title').text(`Hiding player because ${reason}`)
+            $('#album-icon').removeClass('rotating')
+            
+            $('#title-area').removeClass('fadeIn')
+            $('#player').removeClass('fadeIn')
+            
+            $('#title-area').addClass('middleFadeOut')
+            $('#player').addClass('fadeOut')
+
+            state.inactive = true
+        }
+    }
+
+    function activateUI() {
+        if(state.inactive) {
+            if(config.debug) { console.log('activating UI') }
+
+            $('#title-area').removeClass('middleFadeOut')
+            $('#player').removeClass('fadeOut')
+
+            $('#title-area').addClass('fadeIn')
+            $('#player').addClass('fadeIn')
+
+            state.inactive = false
         }
     }
     
