@@ -60,7 +60,8 @@ installRootCA(){
 	mv "$client_key" ../src/certs/
 	mv "$client_cert" ../src/certs/
 	# Give r-w execution to group's u:o so we can use it for dev! 
-	chmod 755 -R ../src/certs/
+	chmod 755 ../src/certs/"$client_key"
+	chmod 755 ../src/certs/"$client_cert"
 }
 
 # Print help for CLI
