@@ -56,12 +56,13 @@ verifyCert(){
 # Install into certs folder
 installRootCA(){
 	printf "installing certs\n"
-	mkdir -p ../src/certs/
-	mv "$client_key" ../src/certs/
-	mv "$client_cert" ../src/certs/
+	mkdir -p ./src/certs/
+	mv "$client_key" ./src/certs/
+	mv "$client_cert" ./src/certs/
 	# Give r-w execution to group's u:o so we can use it for dev! 
-	chmod 755 ../src/certs/"$client_key"
-	chmod 755 ../src/certs/"$client_cert"
+	chmod 755 ./src/certs/"$client_key"
+	chmod 755 ./src/certs/"$client_cert"
+	rm ./*.csr ./*.srl
 }
 
 # Print help for CLI
@@ -72,7 +73,7 @@ printHelp() {
 # Clean up artifacts.
 cleanup(){
 	rm -rf ./*.key ./*.crt ./*.csr ./*.srl
-	rm -rf ../src/certs/*.key ../src/certs/*.crt
+	rm -rf ./src/certs/*.key ./src/certs/*.crt
 }
 
 # Check if we are running as root
