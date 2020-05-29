@@ -14,6 +14,7 @@ A browser source showing your currently playing Spotify track for use in streami
 1. Clone the repository
 2. Install dependencies using ``npm i``
 3. Set up an application in the [Spotify developer platform](https://developer.spotify.com/dashboard/applications), and add ``https://localhost/callback`` to the list of Redirect URIs
-4. Create a certificate and private key. If running locally, using [OpenSSL](https://www.openssl.org/) to create a self-signed certificate will suffice. If hosting the application online, I recommend using [Let's Encrypt](https://letsencrypt.org/getting-started/) through [certbot](https://certbot.eff.org/)
-5. Copy ``src/config.example.js`` to ``config.js`` and fill in ``client_id`` and ``client_secret`` found in the dashboard for your Spotify application, as well as changing ``privateKeyPath`` and ``certificatePath`` to point to the certificate and key you just created.
-6. Done! Run using ``npm start``
+4. Create a certificate and private key. If running locally, using [OpenSSL](https://www.openssl.org/) to create a self-signed certificate will suffice. A utility script for generating development certificates is available via `npm run-script certs`. It will prompt you for a password since it will require root access.
+5. If hosting the application online, I recommend using [Let's Encrypt](https://letsencrypt.org/getting-started/) through [certbot](https://certbot.eff.org/)
+6. Copy ``src/config.example.js`` to ``config.js`` and fill in ``client_id`` and ``client_secret`` found in the dashboard for your Spotify application, as well as changing ``privateKeyPath`` and ``certificatePath`` to point to the certificate and key you just created.
+7. Done! Run using ``npm start``
